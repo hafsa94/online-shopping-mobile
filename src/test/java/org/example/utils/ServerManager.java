@@ -24,6 +24,7 @@ public class ServerManager {
         Properties props = new PropertyManager().getProps();
         AppiumDriverLocalService server = AppiumDriverLocalService.buildService(new AppiumServiceBuilder()
                 .usingAnyFreePort()
+                .withArgument(GeneralServerFlag.LOG_LEVEL, "error")
                 .withArgument(GeneralServerFlag.SESSION_OVERRIDE)
                         // Used just to launch emulator from appium, --avd option deprecated
                         .withArgument(new ServerArgument(){
@@ -37,7 +38,7 @@ public class ServerManager {
             utils.log().fatal("Appium server not started. ABORT!!!");
             throw new AppiumServerHasNotBeenStartedLocallyException("Appium server not started. ABORT!!!");
         }
-        this.server.set(server);
+        ServerManager.server.set(server);
         utils.log().info("Appium server started");
     }
 }
